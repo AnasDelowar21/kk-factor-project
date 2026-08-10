@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
+
 import Home from "./pages/Home";
 import News from "./pages/News";
 import Radio from "./pages/Radio";
 import Music from "./pages/Music";
 import Live from "./pages/Live";
 import Login from "./pages/Login";
+import Article from "./pages/Article";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/music" element={<Music />} />
         <Route path="/live" element={<Live />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/article/:id" element={<Article />} />
       </Routes>
     </div>
   );

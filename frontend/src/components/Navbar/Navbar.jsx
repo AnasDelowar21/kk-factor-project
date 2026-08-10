@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
+  const linkStyle = ({ isActive }) =>
+    isActive
+      ? "text-red-500 font-semibold"
+      : "text-white hover:text-red-500";
+
   return (
     <nav className="bg-black text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -9,12 +14,29 @@ function Navbar() {
         </h1>
 
         <div className="flex gap-6 text-sm font-medium">
-          <Link to="/" className="hover:text-red-500">Home</Link>
-          <Link to="/news" className="hover:text-red-500">News</Link>
-          <Link to="/radio" className="hover:text-red-500">Radio</Link>
-          <Link to="/music" className="hover:text-red-500">Music</Link>
-          <Link to="/live" className="hover:text-red-500">Live</Link>
-          <Link to="/login" className="hover:text-red-500">Login</Link>
+          <NavLink to="/" className={linkStyle}>
+            Home
+          </NavLink>
+
+          <NavLink to="/news" className={linkStyle}>
+            News
+          </NavLink>
+
+          <NavLink to="/radio" className={linkStyle}>
+            Radio
+          </NavLink>
+
+          <NavLink to="/music" className={linkStyle}>
+            Music
+          </NavLink>
+
+          <NavLink to="/live" className={linkStyle}>
+            Live
+          </NavLink>
+
+          <NavLink to="/login" className={linkStyle}>
+            Login
+          </NavLink>
         </div>
       </div>
     </nav>
