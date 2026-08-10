@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function MediaSection() {
   return (
     <section className="bg-white py-14">
@@ -16,9 +18,12 @@ function MediaSection() {
             Stream THE KK FACTOR radio directly from the website.
           </p>
 
-          <button className="mt-6 rounded bg-red-600 px-6 py-3 font-semibold hover:bg-red-700">
+          <Link
+            to="/radio"
+            className="mt-6 inline-block rounded bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700 transition-colors"
+          >
             Play Radio
-          </button>
+          </Link>
         </div>
 
         <div className="rounded-lg bg-gray-200 p-8">
@@ -34,9 +39,12 @@ function MediaSection() {
             Enjoy selected tracks and playlists from THE KK FACTOR.
           </p>
 
-          <button className="mt-6 rounded bg-black px-6 py-3 font-semibold text-white hover:bg-gray-800">
+          <Link
+            to="/music"
+            className="mt-6 inline-block rounded bg-black px-6 py-3 font-semibold text-white hover:bg-gray-800 transition-colors"
+          >
             Open Music Player
-          </button>
+          </Link>
         </div>
 
       </div>
