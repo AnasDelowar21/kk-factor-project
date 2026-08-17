@@ -1,6 +1,111 @@
-import React from "react";
-import { Search, MapPin, Radio, Heart, Play, Pause } from "lucide-react";
+import React, { useState } from "react";
+import { Search, MapPin, Radio, Heart, Play, Pause, ChevronDown, ChevronUp } from "lucide-react";
 import { AustralianStates, RadioGenres } from "../../data/australianStations";
+
+/* Individual Station Card */
+function StationCard({ st, isSelected, isPlaying, isFav, onSelect, onTogglePlay, onToggleFavorite }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      className={`group border rounded-2xl transition-all cursor-pointer ${
+        isSelected
+          ? "border-red-600/70 bg-zinc-900/80 shadow-md shadow-red-950/20"
+          : "border-zinc-800/60 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900/40"
+      }`}
+    >
+      {/* ── Default view: just name + play + fav ── */}
+      <div
+        className="flex items-center gap-3 px-3.5 py-3"
+        onClick={() => onSelect(st)}
+      >
+        {/* Thumbnail */}
+        <img
+          src={st.logo}
+          alt={st.name}
+          className="w-9 h-9 rounded-lg object-cover border border-zinc-800 flex-shrink-0"
+        />
+
+        {/* Name */}
+        <div className="flex-1 min-w-0">
+          <h4 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors truncate">
+            {st.name}
+          </h4>
+          {isSelected && (
+            <div className="flex items-center gap-1 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest">
+                {isPlaying ? "Playing" : "Paused"}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-1.5 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+          {/* Play / Pause */}
+          <button
+            onClick={() => {
+              if (isSelected) onTogglePlay();
+              else onSelect(st);
+            }}
+            className={`p-1.5 rounded-lg border transition-all ${
+              isSelected
+                ? "bg-red-600 border-red-600 text-white"
+                : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600"
+            }`}
+          >
+            {isSelected && isPlaying ? (
+              <Pause className="w-3 h-3 fill-current" />
+            ) : (
+              <Play className="w-3 h-3 fill-current" />
+            )}
+          </button>
+
+          {/* Favorite */}
+          <button
+            onClick={() => onToggleFavorite(st.id)}
+            className={`p-1.5 rounded-lg border transition-all ${
+              isFav
+                ? "bg-red-600/20 border-red-600/50 text-red-400"
+                : "bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-white"
+            }`}
+          >
+            <Heart className={`w-3 h-3 ${isFav ? "fill-current" : ""}`} />
+          </button>
+
+          {/* Expand toggle */}
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="p-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-500 hover:text-white transition-all"
+          >
+            {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          </button>
+        </div>
+      </div>
+
+      {/* ── Expanded details ── */}
+      {expanded && (
+        <div className="px-3.5 pb-3.5 pt-0 border-t border-zinc-800/60 space-y-2 text-xs text-zinc-400">
+          <div className="flex flex-wrap gap-x-3 gap-y-1 pt-2.5 text-[11px] text-zinc-500 font-mono">
+            <span>{st.frequency}</span>
+            <span className="text-zinc-700">·</span>
+            <span>{st.genre}</span>
+            <span className="text-zinc-700">·</span>
+            <span>{st.location}</span>
+          </div>
+          <p className="leading-relaxed text-zinc-400">{st.description}</p>
+          {st.listeners && (
+            <div className="flex items-center gap-1.5 text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+              <span className="text-zinc-400">{st.listeners}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function RadioDirectory({
   stations,
@@ -18,85 +123,76 @@ function RadioDirectory({
   onToggleFavorite,
 }) {
   return (
-    <div className="space-y-5">
-      {/* Filter Controls Bar */}
-      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-xl space-y-3">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          {/* Search Box */}
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-            <input
-              type="text"
-              placeholder="Search station or city..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 transition-all"
-            />
-          </div>
+    <div className="flex flex-col gap-4">
+      {/* ── Filter Bar ── */}
+      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-3.5 shadow-xl space-y-3">
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+          <input
+            type="text"
+            placeholder="Search stations…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 transition-all"
+          />
+        </div>
 
-          {/* Region Dropdown */}
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <MapPin className="w-3.5 h-3.5 text-red-500" />
+        {/* Region + Genre pills row */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5">
+            <MapPin className="w-3 h-3 text-red-500" />
             <select
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="w-full sm:w-auto bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-600 cursor-pointer"
+              className="bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1 text-[11px] text-white focus:outline-none focus:border-red-600 cursor-pointer"
             >
               {AustralianStates.map((st) => (
-                <option key={st} value={st}>
-                  {st}
-                </option>
+                <option key={st} value={st}>{st}</option>
               ))}
             </select>
           </div>
-        </div>
 
-        {/* Genre Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar text-xs">
-          <button
-            onClick={() => setSelectedGenre("Favorites")}
-            className={`px-3 py-1 rounded-lg font-medium transition-all flex items-center gap-1 flex-shrink-0 ${
-              selectedGenre === "Favorites"
-                ? "bg-red-600 text-white font-bold"
-                : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white"
-            }`}
-          >
-            <Heart className="w-3 h-3 fill-current" />
-            Saved ({favorites.length})
-          </button>
-
-          <div className="w-px h-4 bg-zinc-800 mx-1 flex-shrink-0"></div>
-
-          {RadioGenres.map((genre) => {
-            const isActive = selectedGenre === genre;
-            return (
+          <div className="flex items-center gap-1 overflow-x-auto flex-1">
+            <button
+              onClick={() => setSelectedGenre("Favorites")}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1 flex-shrink-0 ${
+                selectedGenre === "Favorites"
+                  ? "bg-red-600 text-white"
+                  : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white"
+              }`}
+            >
+              <Heart className="w-2.5 h-2.5 fill-current" />
+              Saved
+            </button>
+            {RadioGenres.map((genre) => (
               <button
                 key={genre}
                 onClick={() => setSelectedGenre(genre)}
-                className={`px-3 py-1 rounded-lg font-medium transition-all flex-shrink-0 ${
-                  isActive
-                    ? "bg-red-600 text-white font-bold"
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all flex-shrink-0 ${
+                  selectedGenre === genre
+                    ? "bg-red-600 text-white"
                     : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white"
                 }`}
               >
-                {genre}
+                {genre === "All Genres" ? "All" : genre}
               </button>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Directory Title */}
-      <div className="flex items-center justify-between px-1">
-        <h3 className="text-base font-bold text-white flex items-center gap-2">
-          <Radio className="w-4 h-4 text-red-500" />
-          Australian Channels ({stations.length})
-        </h3>
+      {/* ── Channel Count ── */}
+      <div className="flex items-center gap-2 px-1">
+        <Radio className="w-3.5 h-3.5 text-red-500" />
+        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
+          {stations.length} Channel{stations.length !== 1 ? "s" : ""}
+        </span>
       </div>
 
-      {/* Empty State */}
+      {/* ── Empty State ── */}
       {stations.length === 0 && (
-        <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 text-center space-y-2">
+        <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 text-center space-y-3">
           <p className="text-sm text-zinc-400">No stations match your criteria.</p>
           <button
             onClick={() => {
@@ -104,101 +200,27 @@ function RadioDirectory({
               setSelectedState("All Australia");
               setSelectedGenre("All Genres");
             }}
-            className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-all"
+            className="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-all"
           >
-            Reset Filters
+            Reset
           </button>
         </div>
       )}
 
-      {/* Station Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {stations.map((st) => {
-          const isSelected = st.id === currentStationId;
-          const isFav = favorites.includes(st.id);
-
-          return (
-            <div
-              key={st.id}
-              onClick={() => onSelectStation(st)}
-              className={`group bg-zinc-950 border rounded-2xl p-3.5 transition-all cursor-pointer flex flex-col justify-between ${
-                isSelected
-                  ? "border-red-600 bg-zinc-900/80 shadow-lg shadow-red-950/20"
-                  : "border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-900/40"
-              }`}
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={st.logo}
-                      alt={st.name}
-                      className="w-12 h-12 rounded-xl object-cover border border-zinc-800 flex-shrink-0"
-                    />
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-bold text-white group-hover:text-red-500 transition-colors truncate">
-                        {st.name}
-                      </h4>
-                      <p className="text-xs text-zinc-400 truncate">
-                        {st.location} • {st.genre}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleFavorite(st.id);
-                    }}
-                    className={`p-1.5 rounded-lg border transition-all ${
-                      isFav
-                        ? "bg-red-600/20 border-red-600/60 text-red-500"
-                        : "bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-white"
-                    }`}
-                  >
-                    <Heart className={`w-3.5 h-3.5 ${isFav ? "fill-current" : ""}`} />
-                  </button>
-                </div>
-
-                <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
-                  {st.description}
-                </p>
-              </div>
-
-              <div className="pt-3 mt-2 border-t border-zinc-900 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-zinc-400">
-                  {st.frequency}
-                </span>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isSelected) {
-                      onTogglePlay();
-                    } else {
-                      onSelectStation(st);
-                    }
-                  }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
-                    isSelected
-                      ? "bg-red-600 text-white"
-                      : "bg-zinc-900 hover:bg-red-600 hover:text-white text-zinc-300 border border-zinc-800"
-                  }`}
-                >
-                  {isSelected && isPlaying ? (
-                    <>
-                      <Pause className="w-3 h-3 fill-current" /> Playing
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-3 h-3 fill-current" /> Tune In
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          );
-        })}
+      {/* ── Station Cards ── */}
+      <div className="flex flex-col gap-2">
+        {stations.map((st) => (
+          <StationCard
+            key={st.id}
+            st={st}
+            isSelected={st.id === currentStationId}
+            isPlaying={isPlaying}
+            isFav={favorites.includes(st.id)}
+            onSelect={onSelectStation}
+            onTogglePlay={onTogglePlay}
+            onToggleFavorite={onToggleFavorite}
+          />
+        ))}
       </div>
     </div>
   );
