@@ -2,15 +2,15 @@ import NewsCard from "../NewsCard/NewsCard";
 
 function LatestNews() {
   return (
-    <section className="bg-gray-100 py-14">
+    <section className="bg-[#FAFAFA] py-14">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="text-3xl font-extrabold text-[#1A1A1A]">
             Latest News
           </h2>
 
-          <button className="font-semibold text-red-600 hover:text-red-800">
-            View All
+          <button className="font-bold text-[#FF1F8E] hover:text-[#C4006A] transition-colors duration-200">
+            View All →
           </button>
         </div>
 
@@ -38,4 +38,4 @@ function LatestNews() {
   );
 }
 
-export default LatestNews;
+export default LatestNews;

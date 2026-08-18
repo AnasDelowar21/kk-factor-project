@@ -1,28 +1,29 @@
 function Footer() {
   return (
-    <footer className="bg-black text-white">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 md:flex-row">
+    <footer className="bg-[#1A1A1A] text-white">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-10 md:flex-row">
         <div>
-          <h2 className="text-2xl font-bold text-red-600">
-            THE KK FACTOR
+          <h2 className="text-2xl font-extrabold">
+            <span className="text-[#FF1F8E]">THE KK</span>
+            <span className="text-[#A685D4] ml-1">FACTOR</span>
           </h2>
-          <p className="mt-2 text-gray-400">
+          <p className="mt-2 text-[#AAAAAA] text-sm">
             News, Radio, Music and Live Streaming.
           </p>
         </div>
 
-        <div className="flex gap-6">
-          <a href="#" className="hover:text-red-500">Facebook</a>
-          <a href="#" className="hover:text-red-500">Instagram</a>
-          <a href="#" className="hover:text-red-500">YouTube</a>
+        <div className="flex gap-6 text-sm">
+          <a href="#" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Facebook</a>
+          <a href="#" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Instagram</a>
+          <a href="#" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">YouTube</a>
         </div>
       </div>
 
-      <div className="border-t border-gray-800 py-4 text-center text-sm text-gray-500">
+      <div className="border-t border-[#333333] py-4 text-center text-xs text-[#666666]">
         © 2026 THE KK FACTOR. All Rights Reserved.
       </div>
     </footer>
   );
 }
 
-export default Footer;
+export default Footer;
