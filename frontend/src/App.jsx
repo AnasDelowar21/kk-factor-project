@@ -5,11 +5,11 @@ import News from "./pages/News";
 import Radio from "./pages/Radio";
 import Music from "./pages/Music";
 import Live from "./pages/Live";
-import Login from "./pages/Login";
 import Article from "./pages/Article";
 import { PlayerProvider } from "./context/PlayerContext";
 import IntegratedMusicPlayer from "./components/Player/IntegratedMusicPlayer";
-
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 function App() {
   return (
     <PlayerProvider>
@@ -22,8 +22,9 @@ function App() {
           <Route path="/radio" element={<Radio />} />
           <Route path="/music" element={<Music />} />
           <Route path="/live" element={<Live />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<AdminLogin />} />
           <Route path="/article/:id" element={<Article />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
 
         <IntegratedMusicPlayer />
