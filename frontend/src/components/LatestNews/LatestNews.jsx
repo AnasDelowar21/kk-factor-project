@@ -25,14 +25,14 @@ function LatestNews() {
 
   if (loading) {
     return (
-      <section className="bg-gray-100 py-14">
+      <section className="bg-[#FAFAFA] py-14">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-900">Latest News</h2>
+            <h2 className="text-3xl font-extrabold text-[#1A1A1A]">Latest News</h2>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             {[1, 2, 3].map(i => (
-              <div key={i} className="rounded-xl bg-white shadow animate-pulse" style={{ height: '240px' }} />
+              <div key={i} className="rounded-2xl bg-white border border-[#E8E8E8] shadow-sm animate-pulse" style={{ height: '280px' }} />
             ))}
           </div>
         </div>
@@ -42,9 +42,9 @@ function LatestNews() {
 
   if (articles.length === 0) {
     return (
-      <section className="bg-gray-100 py-14">
+      <section className="bg-[#FAFAFA] py-14">
         <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-gray-500">No news articles published yet. Check back soon!</p>
+          <p className="text-[#888888]">No news articles published yet. Check back soon!</p>
         </div>
       </section>
     );
@@ -52,19 +52,19 @@ function LatestNews() {
 
   return (
     <>
-      <section className="bg-gray-100 py-14">
+      <section className="bg-[#FAFAFA] py-14">
         <div className="mx-auto max-w-7xl px-6">
           {/* Header */}
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-red-600 mb-1">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#FF1F8E] mb-1">
                 Latest from the Newsroom
               </p>
-              <h2 className="text-3xl font-bold text-gray-900">Latest News</h2>
+              <h2 className="text-3xl font-extrabold text-[#1A1A1A]">Latest News</h2>
             </div>
             <Link
               to="/news"
-              className="flex items-center gap-2 font-semibold text-red-600 hover:text-red-800 text-sm transition-colors"
+              className="flex items-center gap-2 font-bold text-[#FF1F8E] hover:text-[#C4006A] text-sm transition-colors duration-200"
             >
               View All <ArrowRight className="w-4 h-4" />
             </Link>
@@ -87,11 +87,11 @@ function LatestNews() {
               return (
                 <article
                   key={item._id}
-                  className="group rounded-xl bg-white shadow overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
+                  className="group rounded-2xl bg-white border border-[#E8E8E8] shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
                     {/* Media Container */}
-                    <div className="relative h-48 bg-gray-900 overflow-hidden">
+                    <div className="relative h-48 bg-[#F5F5F5] overflow-hidden">
                       {imageUrl ? (
                         <img
                           src={imageUrl}
@@ -99,7 +99,7 @@ function LatestNews() {
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : videoUrl ? (
-                        <div className="relative w-full h-full bg-black flex items-center justify-center">
+                        <div className="relative w-full h-full bg-[#1A1A1A] flex items-center justify-center">
                           <video
                             src={videoUrl}
                             muted
@@ -107,24 +107,24 @@ function LatestNews() {
                             className="w-full h-full object-cover opacity-60"
                           />
                           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 rounded-full bg-[#FF1F8E] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
                               <Play className="w-5 h-5 fill-current ml-0.5" />
                             </div>
                           </div>
                         </div>
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                          <span className="text-4xl font-black text-white/10">KK</span>
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#FFF0F7] to-[#F5F0FF]">
+                          <span className="text-4xl font-black text-[#FF1F8E]/20">KK</span>
                         </div>
                       )}
 
                       {/* Category badge */}
-                      <span className="absolute top-3 left-3 px-2.5 py-1 bg-red-600 text-white text-xs font-bold uppercase rounded tracking-wider">
+                      <span className="absolute top-3 left-3 px-2.5 py-1 bg-[#FF1F8E] text-white text-xs font-bold uppercase rounded-full tracking-wider shadow">
                         {item.category || 'NEWS'}
                       </span>
 
                       {videoUrl && (
-                        <span className="absolute top-3 right-3 px-2.5 py-1 bg-amber-500 text-black text-xs font-black uppercase rounded tracking-wider flex items-center gap-1 shadow">
+                        <span className="absolute top-3 right-3 px-2.5 py-1 bg-amber-500 text-black text-xs font-black uppercase rounded-full tracking-wider flex items-center gap-1 shadow">
                           <Film className="w-3 h-3" /> VIDEO
                         </span>
                       )}
@@ -142,7 +142,7 @@ function LatestNews() {
                           className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                           title="Watch video now"
                         >
-                          <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-xl hover:scale-110 transition-transform">
+                          <div className="w-12 h-12 rounded-full bg-[#FF1F8E] flex items-center justify-center text-white shadow-xl hover:scale-110 transition-transform">
                             <Play className="w-5 h-5 fill-current ml-0.5" />
                           </div>
                         </button>
@@ -151,11 +151,11 @@ function LatestNews() {
 
                     {/* Content */}
                     <div className="p-5">
-                      <h3 className="font-bold text-gray-900 leading-tight text-base mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
+                      <h3 className="font-bold text-[#1A1A1A] leading-tight text-base mb-2 group-hover:text-[#FF1F8E] transition-colors line-clamp-2">
                         <Link to={`/article/${item._id}`}>{item.title}</Link>
                       </h3>
-                      <p className="text-sm text-gray-500 line-clamp-2 mb-4">{summary}</p>
-                      <div className="flex items-center justify-between text-xs text-gray-400">
+                      <p className="text-sm text-[#888888] line-clamp-2 mb-4">{summary}</p>
+                      <div className="flex items-center justify-between text-xs text-[#AAAAAA]">
                         <div className="flex items-center gap-1">
                           <User className="w-3 h-3" />
                           <span>{item.authorName || 'KK Factor Staff'}</span>
@@ -169,7 +169,7 @@ function LatestNews() {
                   </div>
 
                   {/* Read more / Watch button */}
-                  <div className="px-5 pb-5 pt-2 border-t border-gray-100 flex items-center justify-between">
+                  <div className="px-5 pb-5 pt-2 border-t border-[#F0F0F0] flex items-center justify-between">
                     {videoUrl ? (
                       <button
                         onClick={() =>
@@ -180,14 +180,14 @@ function LatestNews() {
                             authorName: item.authorName,
                           })
                         }
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-800 uppercase tracking-wide transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF1F8E] hover:text-[#C4006A] uppercase tracking-wide transition-colors cursor-pointer"
                       >
                         <Play className="w-3.5 h-3.5 fill-current" /> Watch Video
                       </button>
                     ) : (
                       <Link
                         to={`/article/${item._id}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-800 uppercase tracking-wide transition-colors"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-[#FF1F8E] hover:text-[#C4006A] uppercase tracking-wide transition-colors"
                       >
                         Read Story <ArrowRight className="w-3 h-3" />
                       </Link>
@@ -195,7 +195,7 @@ function LatestNews() {
 
                     <Link
                       to={`/article/${item._id}`}
-                      className="text-xs text-gray-400 hover:text-gray-600 font-medium"
+                      className="text-xs text-[#AAAAAA] hover:text-[#888888] font-medium"
                     >
                       Article Details →
                     </Link>
