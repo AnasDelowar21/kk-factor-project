@@ -73,20 +73,21 @@ function NewsSlideshow() {
 
   const slide = slides[current] || slides[0];
 
+  // Pink/purple gradient backgrounds for slides without images
   const gradients = [
-    'from-red-950 via-slate-900 to-black',
-    'from-blue-950 via-slate-900 to-black',
-    'from-purple-950 via-slate-900 to-black',
-    'from-emerald-950 via-slate-900 to-black',
-    'from-orange-950 via-slate-900 to-black',
-    'from-rose-950 via-slate-900 to-black',
+    'from-[#FF1F8E] via-[#C4006A] to-[#7B5EA7]',
+    'from-[#7B5EA7] via-[#5E4580] to-[#1A1A1A]',
+    'from-[#C4006A] via-[#FF1F8E] to-[#FF6BB5]',
+    'from-[#1A1A1A] via-[#7B5EA7] to-[#FF1F8E]',
+    'from-[#FF6BB5] via-[#FF1F8E] to-[#C4006A]',
+    'from-[#5E4580] via-[#7B5EA7] to-[#A685D4]',
   ];
   const gradient = gradients[current % gradients.length];
 
   return (
     <>
       <section
-        className="relative overflow-hidden bg-black text-white"
+        className="relative overflow-hidden bg-[#1A1A1A] text-white"
         style={{ minHeight: '92vh' }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -122,9 +123,9 @@ function NewsSlideshow() {
             </>
           ) : (
             <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`}>
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse" />
               <div
-                className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-white/5 rounded-full blur-2xl animate-pulse"
+                className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-[#FF1F8E]/20 rounded-full blur-2xl animate-pulse"
                 style={{ animationDelay: '1s' }}
               />
             </div>
@@ -145,8 +146,8 @@ function NewsSlideshow() {
           >
             {/* Category Badge & Video Indicator */}
             <div className="flex flex-wrap items-center gap-2 mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/20 border border-red-600/40 text-red-400 text-xs font-bold uppercase tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF1F8E]/20 border border-[#FF1F8E]/40 text-[#FF6BB5] text-xs font-bold uppercase tracking-widest">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF1F8E] animate-pulse inline-block" />
                 {slide.category} — THE KK FACTOR
               </div>
 
@@ -164,7 +165,7 @@ function NewsSlideshow() {
 
             {/* Summary */}
             {slide.summary && (
-              <p className="mt-6 text-base sm:text-lg text-zinc-300 max-w-xl leading-relaxed line-clamp-3">
+              <p className="mt-6 text-base sm:text-lg text-white/70 max-w-xl leading-relaxed line-clamp-3">
                 {slide.summary}
               </p>
             )}
@@ -175,7 +176,7 @@ function NewsSlideshow() {
               {slide.videoUrl && (
                 <button
                   onClick={() => setActiveVideoModal(slide)}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-sm uppercase tracking-wide transition shadow-2xl shadow-red-950 animate-bounce-subtle"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#FF1F8E] hover:bg-[#C4006A] text-white font-bold rounded-xl text-sm uppercase tracking-wide transition shadow-2xl shadow-[#FF1F8E]/30"
                 >
                   <Play className="w-4 h-4 fill-current" /> Watch Video
                 </button>
@@ -186,8 +187,8 @@ function NewsSlideshow() {
                   to={`/article/${slide.id}`}
                   className={`inline-flex items-center gap-2 px-7 py-3.5 ${
                     slide.videoUrl
-                      ? 'bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700 text-white'
-                      : 'bg-red-600 hover:bg-red-500 text-white shadow-2xl shadow-red-950'
+                      ? 'bg-white/10 hover:bg-white/20 border border-white/20 text-white'
+                      : 'bg-[#FF1F8E] hover:bg-[#C4006A] text-white shadow-2xl shadow-[#FF1F8E]/30'
                   } font-bold rounded-xl text-sm uppercase tracking-wide transition`}
                 >
                   Read Full Story <ArrowRight className="w-4 h-4" />
@@ -195,7 +196,7 @@ function NewsSlideshow() {
               ) : (
                 <Link
                   to="/news"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-sm uppercase tracking-wide transition shadow-2xl shadow-red-950"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#FF1F8E] hover:bg-[#C4006A] text-white font-bold rounded-xl text-sm uppercase tracking-wide transition shadow-2xl shadow-[#FF1F8E]/30"
                 >
                   Explore News <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -216,14 +217,14 @@ function NewsSlideshow() {
           <>
             <button
               onClick={prev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-black/70 hover:border-white/30 transition"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-[#FF1F8E]/60 hover:border-[#FF1F8E]/40 transition"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={next}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-black/70 hover:border-white/30 transition"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-[#FF1F8E]/60 hover:border-[#FF1F8E]/40 transition"
               aria-label="Next slide"
             >
               <ChevronRight className="w-6 h-6" />
@@ -244,7 +245,7 @@ function NewsSlideshow() {
                 <span
                   className={`block rounded-full transition-all duration-300 ${
                     i === current
-                      ? 'w-8 h-2 bg-red-500'
+                      ? 'w-8 h-2 bg-[#FF1F8E]'
                       : 'w-2 h-2 bg-white/30 hover:bg-white/60'
                   }`}
                 />
@@ -265,7 +266,7 @@ function NewsSlideshow() {
           <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/10 z-20">
             <div
               key={current}
-              className="h-full bg-red-500"
+              className="h-full bg-[#FF1F8E]"
               style={{
                 animation: `progressBar ${SLIDE_INTERVAL}ms linear forwards`,
               }}

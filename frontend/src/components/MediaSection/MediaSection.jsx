@@ -4,7 +4,7 @@ function MediaSection() {
   return (
     <section className="bg-white py-14">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 md:grid-cols-2">
-        
+
         <div className="rounded-2xl bg-gradient-to-br from-[#FF1F8E] to-[#C4006A] p-8 text-white shadow-lg">
           <p className="text-sm font-bold uppercase tracking-widest opacity-80">
             Live Radio
@@ -52,4 +52,4 @@ function MediaSection() {
   );
 }
 
-export default MediaSection;
+export default MediaSection;

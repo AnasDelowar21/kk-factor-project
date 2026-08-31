@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Play, Volume2, ShieldCheck, Film } from 'lucide-react';
+import { X, Film } from 'lucide-react';
 
 function VideoModal({ isOpen, onClose, videoUrl, title, category, authorName }) {
   useEffect(() => {
@@ -20,27 +20,27 @@ function VideoModal({ isOpen, onClose, videoUrl, title, category, authorName }) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6 md:p-10 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6 md:p-10"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl transition-all"
+        className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-white border border-[#E8E8E8] shadow-2xl transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 bg-zinc-900 border-b border-zinc-800">
+        <div className="flex items-center justify-between px-6 py-4 bg-[#FAFAFA] border-b border-[#E8E8E8]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-red-600/20 border border-red-600/40 flex items-center justify-center text-red-500">
+            <div className="w-8 h-8 rounded-lg bg-[#FF1F8E]/10 border border-[#FF1F8E]/30 flex items-center justify-center text-[#FF1F8E]">
               <Film className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-red-600 text-white text-[10px] font-black uppercase rounded tracking-wider">
+                <span className="px-2 py-0.5 bg-[#FF1F8E] text-white text-[10px] font-black uppercase rounded tracking-wider">
                   {category || 'NEWS'}
                 </span>
-                <span className="text-xs text-zinc-400 font-mono">KK FACTOR VIDEO BROADCAST</span>
+                <span className="text-xs text-[#888888] font-mono">KK FACTOR VIDEO BROADCAST</span>
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white truncate max-w-lg mt-0.5">
+              <h3 className="text-sm sm:text-base font-bold text-[#1A1A1A] truncate max-w-lg mt-0.5">
                 {title || 'Video Story'}
               </h3>
             </div>
@@ -48,7 +48,7 @@ function VideoModal({ isOpen, onClose, videoUrl, title, category, authorName }) 
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-zinc-800 hover:bg-red-600 text-zinc-300 hover:text-white flex items-center justify-center transition-colors"
+            className="w-9 h-9 rounded-full bg-[#F5F5F5] hover:bg-[#FF1F8E] text-[#888888] hover:text-white flex items-center justify-center transition-colors border border-[#E8E8E8] hover:border-[#FF1F8E]"
             title="Close video"
           >
             <X className="w-5 h-5" />
@@ -72,13 +72,13 @@ function VideoModal({ isOpen, onClose, videoUrl, title, category, authorName }) 
         </div>
 
         {/* Footer info */}
-        <div className="px-6 py-3 bg-zinc-900/90 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400">
+        <div className="px-6 py-3 bg-[#FAFAFA] border-t border-[#E8E8E8] flex items-center justify-between text-xs text-[#888888]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Streaming in High Definition</span>
             {authorName && <span>• Reported by {authorName}</span>}
           </div>
-          <span className="font-mono text-[11px] text-zinc-500">THE KK FACTOR MEDIA PLAYER</span>
+          <span className="font-mono text-[11px] text-[#AAAAAA]">THE KK FACTOR MEDIA PLAYER</span>
         </div>
       </div>
     </div>

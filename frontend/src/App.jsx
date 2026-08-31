@@ -10,10 +10,11 @@ import { PlayerProvider } from "./context/PlayerContext";
 import IntegratedMusicPlayer from "./components/Player/IntegratedMusicPlayer";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+
 function App() {
   return (
     <PlayerProvider>
-      <div className="min-h-screen bg-black text-white font-sans">
+      <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] font-sans">
         <Navbar />
 
         <Routes>

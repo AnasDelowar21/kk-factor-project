@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  LogOut, PlusCircle, Pencil, Trash2, Eye, EyeOff, Star,
+  LogOut, PlusCircle, Pencil, Trash2, Star,
   Upload, X, CheckCircle, AlertCircle, ChevronDown, Image, Video
 } from 'lucide-react';
 
@@ -29,7 +29,7 @@ function Toast({ message, type, onClose }) {
     return () => clearTimeout(t);
   }, [onClose]);
   return (
-    <div className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white text-sm font-semibold transition-all ${type === 'success' ? 'bg-emerald-600' : 'bg-red-600'}`}>
+    <div className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white text-sm font-semibold transition-all ${type === 'success' ? 'bg-emerald-500' : 'bg-red-500'}`}>
       {type === 'success' ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
       {message}
     </div>
@@ -159,24 +159,29 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', color: 'white', fontFamily: 'system-ui, sans-serif' }}>
+    <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] font-sans">
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
       {/* Top Bar */}
-      <header style={{ borderBottom: '1px solid #222', backgroundColor: '#111', padding: '0 2rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ef4444', animation: 'pulse 2s infinite' }} />
-          <span style={{ fontWeight: 800, fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase' }}>KK Factor</span>
-          <span style={{ color: '#555', fontSize: '14px' }}>/ Newsroom</span>
+      <header className="bg-white border-b border-[#E8E8E8] px-6 h-[60px] flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#FF1F8E] flex items-center justify-center">
+            <span className="text-white font-black text-xs">KK</span>
+          </div>
+          <span className="font-extrabold text-sm tracking-tight text-[#1A1A1A]">THE KK FACTOR</span>
+          <span className="text-[#AAAAAA] text-sm">/ Newsroom Admin</span>
         </div>
-        <button onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 14px', backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: '8px', color: '#aaa', fontSize: '13px', cursor: 'pointer' }}>
-          <LogOut size={14} /> Logout
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-4 py-2 bg-[#FAFAFA] border border-[#E8E8E8] rounded-xl text-[#888888] text-xs font-bold hover:border-[#FF1F8E]/40 hover:text-[#FF1F8E] transition-colors"
+        >
+          <LogOut size={13} /> Logout
         </button>
       </header>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+      <div className="max-w-6xl mx-auto px-6 py-8">
         {/* Tab Nav */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '2rem', borderBottom: '1px solid #222', paddingBottom: '0' }}>
+        <div className="flex gap-1 mb-8 border-b border-[#E8E8E8] pb-0">
           {[
             { id: 'compose', label: editId ? '✏️ Edit Article' : '✍️ Compose' },
             { id: 'manage', label: `📋 Manage (${news.length})` }
@@ -184,11 +189,11 @@ const AdminDashboard = () => {
             <button
               key={tab.id}
               onClick={() => { setActiveTab(tab.id); if (tab.id === 'compose' && !editId) resetForm(); }}
-              style={{
-                padding: '10px 20px', fontSize: '13px', fontWeight: 700, border: 'none', cursor: 'pointer',
-                backgroundColor: 'transparent', borderBottom: activeTab === tab.id ? '2px solid #ef4444' : '2px solid transparent',
-                color: activeTab === tab.id ? 'white' : '#666', transition: 'all 0.2s', marginBottom: '-1px'
-              }}
+              className={`px-5 py-3 text-sm font-bold border-b-2 transition-all mb-[-1px] ${
+                activeTab === tab.id
+                  ? 'border-[#FF1F8E] text-[#FF1F8E]'
+                  : 'border-transparent text-[#888888] hover:text-[#1A1A1A]'
+              }`}
             >
               {tab.label}
             </button>
@@ -198,141 +203,142 @@ const AdminDashboard = () => {
         {/* COMPOSE TAB */}
         {activeTab === 'compose' && (
           <form onSubmit={handleSubmit}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '2rem' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
               {/* Left — Main Content */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div className="flex flex-col gap-5">
                 {/* Title */}
                 <div>
-                  <label style={labelStyle}>Headline *</label>
+                  <label className={labelStyle}>Headline *</label>
                   <input
                     type="text"
                     value={form.title}
                     onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                     required
                     placeholder="Write a compelling headline..."
-                    style={{ ...inputStyle, fontSize: '18px', fontWeight: '700' }}
+                    className={`${inputStyle} text-lg font-bold`}
                   />
                 </div>
 
                 {/* Summary */}
                 <div>
-                  <label style={labelStyle}>Summary / Excerpt <span style={{ color: '#555' }}>(shown in news cards)</span></label>
+                  <label className={labelStyle}>Summary / Excerpt <span className="text-[#AAAAAA] normal-case font-normal">(shown in news cards)</span></label>
                   <textarea
                     value={form.summary}
                     onChange={e => setForm(f => ({ ...f, summary: e.target.value }))}
                     placeholder="Write a 1-2 sentence preview of the story..."
                     rows={2}
                     maxLength={220}
-                    style={inputStyle}
+                    className={inputStyle}
                   />
-                  <div style={{ fontSize: '11px', color: '#555', marginTop: '4px', textAlign: 'right' }}>{form.summary.length}/220</div>
+                  <div className="text-[11px] text-[#AAAAAA] mt-1 text-right">{form.summary.length}/220</div>
                 </div>
 
                 {/* Content */}
                 <div>
-                  <label style={labelStyle}>Full Article *</label>
+                  <label className={labelStyle}>Full Article *</label>
                   <textarea
                     value={form.content}
                     onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
                     required
                     placeholder="Write the full article here..."
                     rows={16}
-                    style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.7' }}
+                    className={`${inputStyle} resize-y leading-7`}
                   />
                 </div>
               </div>
 
               {/* Right — Metadata & Media */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div className="flex flex-col gap-4">
 
                 {/* Publish / Draft */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Status</label>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Status</label>
+                  <div className="flex gap-2">
                     {['published', 'draft'].map(s => (
                       <button key={s} type="button"
                         onClick={() => setForm(f => ({ ...f, status: s }))}
-                        style={{
-                          flex: 1, padding: '8px', borderRadius: '8px', fontWeight: 700,
-                          fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px',
-                          border: form.status === s ? '2px solid #ef4444' : '2px solid #333',
-                          backgroundColor: form.status === s ? '#ef4444' : '#1a1a1a',
-                          color: 'white', cursor: 'pointer', transition: 'all 0.2s'
-                        }}>
+                        className={`flex-1 py-2 rounded-xl text-xs font-bold uppercase tracking-wide border-2 transition-all ${
+                          form.status === s
+                            ? 'border-[#FF1F8E] bg-[#FF1F8E] text-white'
+                            : 'border-[#E8E8E8] bg-white text-[#888888] hover:border-[#FF1F8E]/40'
+                        }`}
+                      >
                         {s === 'published' ? '🟢 Publish' : '📝 Draft'}
                       </button>
                     ))}
                   </div>
                   {/* Featured toggle */}
-                  <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div className="mt-3">
                     <button type="button"
                       onClick={() => setForm(f => ({ ...f, isFeatured: !f.isFeatured }))}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 12px',
-                        borderRadius: '8px', border: form.isFeatured ? '2px solid #f59e0b' : '2px solid #333',
-                        backgroundColor: form.isFeatured ? '#f59e0b22' : '#1a1a1a', color: form.isFeatured ? '#f59e0b' : '#666',
-                        fontSize: '12px', fontWeight: 700, cursor: 'pointer', width: '100%', justifyContent: 'center'
-                      }}>
-                      <Star size={13} fill={form.isFeatured ? '#f59e0b' : 'none'} />
+                      className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl border-2 text-xs font-bold transition-all ${
+                        form.isFeatured
+                          ? 'border-amber-400 bg-amber-50 text-amber-600'
+                          : 'border-[#E8E8E8] bg-white text-[#888888] hover:border-amber-300'
+                      }`}
+                    >
+                      <Star size={13} fill={form.isFeatured ? '#d97706' : 'none'} />
                       {form.isFeatured ? 'Featured Story' : 'Mark as Featured'}
                     </button>
                   </div>
                 </div>
 
                 {/* Category */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Category</label>
-                  <div style={{ position: 'relative' }}>
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Category</label>
+                  <div className="relative">
                     <select
                       value={form.category}
                       onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-                      style={{ ...inputStyle, appearance: 'none', paddingRight: '32px', cursor: 'pointer' }}
+                      className={`${inputStyle} appearance-none pr-8 cursor-pointer`}
                     >
                       {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
-                    <ChevronDown size={14} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: '#666', pointerEvents: 'none' }} />
+                    <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#AAAAAA] pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Author */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Author / Byline</label>
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Author / Byline</label>
                   <input
                     type="text"
                     value={form.authorName}
                     onChange={e => setForm(f => ({ ...f, authorName: e.target.value }))}
                     placeholder="e.g. Jane Smith"
-                    style={inputStyle}
+                    className={inputStyle}
                   />
                 </div>
 
                 {/* Tags */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Tags <span style={{ color: '#555' }}>(comma-separated)</span></label>
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Tags <span className="text-[#AAAAAA] normal-case font-normal">(comma-separated)</span></label>
                   <input
                     type="text"
                     value={form.tags}
                     onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
                     placeholder="e.g. music, australia, culture"
-                    style={inputStyle}
+                    className={inputStyle}
                   />
                 </div>
 
                 {/* Cover Image */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Cover Image</label>
-                  <input ref={imageInputRef} type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Cover Image</label>
+                  <input ref={imageInputRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                   {imagePreview ? (
-                    <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden' }}>
-                      <img src={imagePreview} alt="Preview" style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }} />
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img src={imagePreview} alt="Preview" className="w-full h-36 object-cover" />
                       <button type="button" onClick={() => { setImagePreview(null); setForm(f => ({ ...f, image: null })); }}
-                        style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#000', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <X size={12} />
+                        className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white border border-[#E8E8E8] shadow flex items-center justify-center text-[#888888] hover:text-red-500 transition-colors"
+                      >
+                        <X size={13} />
                       </button>
                     </div>
                   ) : (
                     <button type="button" onClick={() => imageInputRef.current.click()}
-                      style={{ width: '100%', padding: '24px', border: '2px dashed #333', borderRadius: '8px', backgroundColor: '#111', color: '#555', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', fontSize: '12px', transition: 'border-color 0.2s' }}>
+                      className="w-full py-6 border-2 border-dashed border-[#E8E8E8] rounded-xl bg-[#FAFAFA] text-[#AAAAAA] hover:border-[#FF1F8E]/40 hover:text-[#FF1F8E] flex flex-col items-center gap-2 text-xs font-bold transition-colors cursor-pointer"
+                    >
                       <Image size={20} />
                       Click to upload image
                     </button>
@@ -340,25 +346,32 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Video */}
-                <div style={cardStyle}>
-                  <label style={labelStyle}>Video</label>
-                  <input ref={videoInputRef} type="file" accept="video/*" onChange={handleVideoChange} style={{ display: 'none' }} />
+                <div className={cardStyle}>
+                  <label className={labelStyle}>Video</label>
+                  <input ref={videoInputRef} type="file" accept="video/*" onChange={handleVideoChange} className="hidden" />
                   <button type="button" onClick={() => videoInputRef.current.click()}
-                    style={{ width: '100%', padding: '16px', border: `2px dashed ${form.video ? '#ef4444' : '#333'}`, borderRadius: '8px', backgroundColor: '#111', color: form.video ? '#ef4444' : '#555', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '12px', fontWeight: 700 }}>
+                    className={`w-full py-4 border-2 rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-colors cursor-pointer ${
+                      form.video
+                        ? 'border-[#FF1F8E]/40 bg-[#FF1F8E]/5 text-[#FF1F8E]'
+                        : 'border-dashed border-[#E8E8E8] bg-[#FAFAFA] text-[#AAAAAA] hover:border-[#FF1F8E]/40 hover:text-[#FF1F8E]'
+                    }`}
+                  >
                     <Video size={16} />
                     {form.video ? `✓ ${form.video.name}` : 'Upload Video'}
                   </button>
                 </div>
 
                 {/* Submit */}
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div className="flex gap-2">
                   <button type="submit" disabled={loading}
-                    style={{ flex: 1, padding: '12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 800, fontSize: '13px', letterSpacing: '1px', textTransform: 'uppercase', cursor: loading ? 'wait' : 'pointer', opacity: loading ? 0.7 : 1, transition: 'all 0.2s' }}>
+                    className="flex-1 py-3 bg-[#FF1F8E] hover:bg-[#C4006A] text-white font-extrabold text-xs uppercase tracking-widest rounded-xl transition shadow-md shadow-[#FF1F8E]/20 disabled:opacity-60 disabled:cursor-wait"
+                  >
                     {loading ? 'Saving...' : editId ? 'Save Changes' : '🚀 Publish'}
                   </button>
                   {editId && (
                     <button type="button" onClick={resetForm}
-                      style={{ padding: '12px 16px', backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: '10px', color: '#aaa', cursor: 'pointer', fontSize: '13px' }}>
+                      className="px-4 py-3 bg-white border border-[#E8E8E8] rounded-xl text-[#888888] text-xs font-bold hover:border-[#D0D0D0] transition"
+                    >
                       Cancel
                     </button>
                   )}
@@ -372,38 +385,47 @@ const AdminDashboard = () => {
         {activeTab === 'manage' && (
           <div>
             {news.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '4rem', color: '#555' }}>
-                <p style={{ fontSize: '16px' }}>No articles yet. Go to Compose to write your first story.</p>
+              <div className="text-center py-16">
+                <div className="w-16 h-16 rounded-full bg-[#FFF0F7] border border-[#FF1F8E]/20 flex items-center justify-center mx-auto mb-4">
+                  <PlusCircle className="w-7 h-7 text-[#FF1F8E]" />
+                </div>
+                <p className="text-[#888888] text-sm">No articles yet. Go to Compose to write your first story.</p>
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div className="flex flex-col gap-3">
                 {news.map(item => (
-                  <div key={item._id} style={{ backgroundColor: '#111', border: '1px solid #222', borderRadius: '12px', padding: '1.25rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '1rem', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                        <span style={{ padding: '2px 8px', backgroundColor: '#ef444422', border: '1px solid #ef444440', borderRadius: '20px', color: '#ef4444', fontSize: '10px', fontWeight: 800, letterSpacing: '1px' }}>
+                  <div key={item._id} className="bg-white border border-[#E8E8E8] rounded-2xl p-5 flex items-center justify-between gap-4 hover:border-[#FF1F8E]/20 hover:shadow-sm transition-all">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                        <span className="px-2 py-0.5 bg-[#FF1F8E]/10 border border-[#FF1F8E]/20 rounded-full text-[#FF1F8E] text-[10px] font-extrabold uppercase tracking-wide">
                           {item.category}
                         </span>
-                        <span style={{ padding: '2px 8px', backgroundColor: item.status === 'published' ? '#10b98122' : '#f59e0b22', border: `1px solid ${item.status === 'published' ? '#10b98140' : '#f59e0b40'}`, borderRadius: '20px', color: item.status === 'published' ? '#10b981' : '#f59e0b', fontSize: '10px', fontWeight: 700 }}>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                          item.status === 'published'
+                            ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                            : 'bg-amber-50 border-amber-200 text-amber-600'
+                        }`}>
                           {item.status === 'published' ? '🟢 Published' : '📝 Draft'}
                         </span>
-                        {item.isFeatured && <span style={{ color: '#f59e0b', fontSize: '12px' }}>⭐ Featured</span>}
+                        {item.isFeatured && <span className="text-amber-500 text-xs">⭐ Featured</span>}
+                        {item.videoUrl && <span className="text-[#7B5EA7] text-[10px] font-bold">🎬 Has video</span>}
                       </div>
-                      <h3 style={{ fontWeight: 800, fontSize: '15px', margin: '0 0 4px 0', color: 'white' }}>{item.title}</h3>
-                      <div style={{ fontSize: '11px', color: '#555' }}>
+                      <h3 className="font-extrabold text-sm text-[#1A1A1A] truncate">{item.title}</h3>
+                      <div className="text-[11px] text-[#AAAAAA] mt-0.5">
                         {item.authorName && <span>By {item.authorName} · </span>}
                         {new Date(item.createdAt).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        {item.videoUrl && <span style={{ color: '#ef4444', marginLeft: '8px' }}>🎬 Has video</span>}
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
+                    <div className="flex gap-2 flex-shrink-0">
                       <button onClick={() => handleEdit(item)}
-                        style={{ padding: '8px 14px', backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: '8px', color: '#aaa', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 700 }}>
-                        <Pencil size={13} /> Edit
+                        className="flex items-center gap-1.5 px-3 py-2 bg-[#FAFAFA] border border-[#E8E8E8] rounded-xl text-[#888888] text-xs font-bold hover:border-[#FF1F8E]/40 hover:text-[#FF1F8E] transition-colors"
+                      >
+                        <Pencil size={12} /> Edit
                       </button>
                       <button onClick={() => handleDelete(item._id)}
-                        style={{ padding: '8px 14px', backgroundColor: '#1a0000', border: '1px solid #440000', borderRadius: '8px', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 700 }}>
-                        <Trash2 size={13} /> Delete
+                        className="flex items-center gap-1.5 px-3 py-2 bg-red-50 border border-red-200 rounded-xl text-red-500 text-xs font-bold hover:bg-red-100 transition-colors"
+                      >
+                        <Trash2 size={12} /> Delete
                       </button>
                     </div>
                   </div>
@@ -418,32 +440,8 @@ const AdminDashboard = () => {
 };
 
 // Styles
-const inputStyle = {
-  width: '100%',
-  padding: '10px 12px',
-  backgroundColor: '#111',
-  border: '1px solid #2a2a2a',
-  borderRadius: '8px',
-  color: 'white',
-  fontSize: '14px',
-  outline: 'none',
-  boxSizing: 'border-box',
-  transition: 'border-color 0.2s',
-};
-const labelStyle = {
-  display: 'block',
-  fontSize: '11px',
-  fontWeight: 800,
-  textTransform: 'uppercase',
-  letterSpacing: '1px',
-  color: '#888',
-  marginBottom: '6px',
-};
-const cardStyle = {
-  backgroundColor: '#0f0f0f',
-  border: '1px solid #1e1e1e',
-  borderRadius: '12px',
-  padding: '1rem',
-};
+const inputStyle = "w-full px-4 py-3 bg-[#FAFAFA] border border-[#E8E8E8] rounded-xl text-[#1A1A1A] text-sm placeholder-[#AAAAAA] focus:outline-none focus:border-[#FF1F8E] focus:ring-2 focus:ring-[#FF1F8E]/10 transition box-border";
+const labelStyle = "block text-[11px] font-extrabold uppercase tracking-widest text-[#888888] mb-2";
+const cardStyle = "bg-white border border-[#E8E8E8] rounded-2xl p-4 shadow-sm";
 
 export default AdminDashboard;
