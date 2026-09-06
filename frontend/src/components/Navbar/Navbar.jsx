@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { Bell } from "lucide-react";
+import { useSubscribeModal } from "../../context/SubscribeContext";
 
 function Navbar() {
+  const { openSubscribeModal } = useSubscribeModal();
   const linkStyle = ({ isActive }) =>
     isActive
       ? "font-bold text-[#FF1F8E] border-b-2 border-[#FF1F8E] pb-1 transition-all"
@@ -29,10 +32,19 @@ function Navbar() {
 
         <div className="flex items-center gap-4 sm:gap-6 text-sm font-medium">
           <NavLink to="/" className={linkStyle}>Home</NavLink>
+          <NavLink to="/about" className={linkStyle}>About</NavLink>
           <NavLink to="/news" className={linkStyle}>News</NavLink>
           <NavLink to="/radio" className={linkStyle}>Radio</NavLink>
           <NavLink to="/music" className={linkStyle}>Music</NavLink>
           <NavLink to="/live" className={linkStyle}>Live</NavLink>
+          <button
+            type="button"
+            onClick={openSubscribeModal}
+            className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#FF1F8E] to-[#7B5EA7] text-white px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm hover:opacity-95 hover:shadow-md transition-all duration-200 shadow-sm cursor-pointer"
+          >
+            <Bell className="w-3.5 h-3.5" />
+            <span>Subscribe</span>
+          </button>
           <NavLink
             to="/login"
             className={({ isActive }) =>

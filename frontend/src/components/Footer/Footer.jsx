@@ -12,6 +12,15 @@ function Footer() {
           </p>
         </div>
 
+        <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+          <a href="/" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Home</a>
+          <a href="/about" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">About</a>
+          <a href="/news" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">News</a>
+          <a href="/radio" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Radio</a>
+          <a href="/music" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Music</a>
+          <a href="/live" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Live</a>
+        </div>
+
         <div className="flex gap-6 text-sm">
           <a href="#" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Facebook</a>
           <a href="#" className="text-[#BBBBBB] hover:text-[#FF1F8E] transition-colors duration-200">Instagram</a>

@@ -6,19 +6,23 @@ import Radio from "./pages/Radio";
 import Music from "./pages/Music";
 import Live from "./pages/Live";
 import Article from "./pages/Article";
+import About from "./pages/About";
 import { PlayerProvider } from "./context/PlayerContext";
+import { SubscribeProvider } from "./context/SubscribeContext";
 import IntegratedMusicPlayer from "./components/Player/IntegratedMusicPlayer";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 function App() {
   return (
-    <PlayerProvider>
-      <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] font-sans">
-        <Navbar />
+    <SubscribeProvider>
+      <PlayerProvider>
+        <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] font-sans">
+          <Navbar />
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/news" element={<News />} />
           <Route path="/radio" element={<Radio />} />
           <Route path="/music" element={<Music />} />
@@ -31,6 +35,7 @@ function App() {
         <IntegratedMusicPlayer />
       </div>
     </PlayerProvider>
+  </SubscribeProvider>
   );
 }
 

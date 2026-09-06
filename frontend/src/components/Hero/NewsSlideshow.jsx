@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ArrowRight, Play, Film } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Play, Film, Bell } from 'lucide-react';
 import VideoModal from '../VideoModal/VideoModal';
+import { useSubscribeModal } from '../../context/SubscribeContext';
 
 const FALLBACK_SLIDES = [
   {
@@ -17,6 +18,7 @@ const FALLBACK_SLIDES = [
 const SLIDE_INTERVAL = 6000; // 6 seconds per slide
 
 function NewsSlideshow() {
+  const { openSubscribeModal } = useSubscribeModal();
   const [slides, setSlides] = useState(FALLBACK_SLIDES);
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -208,6 +210,14 @@ function NewsSlideshow() {
               >
                 Watch Live
               </Link>
+
+              <button
+                type="button"
+                onClick={openSubscribeModal}
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#FF1F8E] via-[#C4006A] to-[#7B5EA7] hover:brightness-110 text-white font-bold rounded-xl text-sm uppercase tracking-wide transition shadow-xl shadow-[#FF1F8E]/30 cursor-pointer"
+              >
+                <Bell className="w-4 h-4 animate-pulse" /> Subscribe
+              </button>
             </div>
           </div>
         </div>
